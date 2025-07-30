@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    initializeLoadingScreen();
     initializeNavigation();
     initializeAnimations();
     initializeParticleSystem();
@@ -61,11 +62,16 @@ function initializeAnimations() {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-in');
                 animateElements(entry.target);
+                
+                // Trigger counter animation for metrics
+                if (entry.target.classList.contains('achievement-metrics')) {
+                    animateCounters();
+                }
             }
         });
     }, observerOptions);
 
-    document.querySelectorAll('.skill-category, .cert-badge, .timeline-item').forEach(el => {
+    document.querySelectorAll('.skill-category, .cert-badge, .timeline-item, .achievement-metrics').forEach(el => {
         observer.observe(el);
     });
 }
@@ -387,3 +393,97 @@ function addGlitchEffect() {
 }
 
 addGlitchEffect();
+
+function animateCounters() {
+    const counters = document.querySelectorAll('.metric-number');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / 100; // Animation duration control
+        let current = 0;
+        
+        const updateCounter = () => {
+            if (current < target) {
+                current += increment;
+                if (current > target) current = target;
+                
+                // Format numbers appropriately
+                if (target >= 1000) {
+                    counter.textContent = Math.floor(current).toLocaleString();
+                } else {
+                    counter.textContent = Math.floor(current);
+                }
+                
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.textContent = target >= 1000 ? target.toLocaleString() : target;
+            }
+        };
+        
+        // Add entrance animation
+        counter.style.animation = 'countUp 0.6s ease forwards';
+        
+        // Start counting after a brief delay
+        setTimeout(updateCounter, 200);
+    });
+}
+
+function initializeLoadingScreen() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const bootMessages = document.getElementById('boot-messages');
+    const loadingProgress = document.getElementById('loading-progress');
+    const loadingPercentage = document.getElementById('loading-percentage');
+    
+    const bootSequence = [
+        'INITIALIZING SECURITY PROTOCOLS...',
+        'LOADING THREAT DETECTION MODULES...',
+        'ESTABLISHING SECURE CONNECTION...',
+        'VERIFYING DIGITAL CERTIFICATES...',
+        'ACTIVATING FIREWALL PROTECTION...',
+        'SCANNING SYSTEM INTEGRITY...',
+        'LOADING CYBERSECURITY PORTFOLIO...',
+        'AUTHENTICATION COMPLETE ✓'
+    ];
+    
+    let currentStep = 0;
+    let progress = 0;
+    
+    function showNextBootMessage() {
+        if (currentStep < bootSequence.length) {
+            const bootLine = document.createElement('div');
+            bootLine.className = 'boot-line typing';
+            bootLine.textContent = bootSequence[currentStep];
+            bootMessages.appendChild(bootLine);
+            
+            // Remove typing class after a brief moment
+            setTimeout(() => {
+                bootLine.classList.remove('typing');
+            }, 800);
+            
+            // Update progress
+            progress = Math.floor(((currentStep + 1) / bootSequence.length) * 100);
+            loadingProgress.style.width = progress + '%';
+            loadingPercentage.textContent = progress + '%';
+            
+            currentStep++;
+            
+            // Continue to next message
+            if (currentStep < bootSequence.length) {
+                setTimeout(showNextBootMessage, 600);
+            } else {
+                // Loading complete, fade out after brief delay
+                setTimeout(() => {
+                    loadingScreen.classList.add('fade-out');
+                    // Remove from DOM after transition
+                    setTimeout(() => {
+                        loadingScreen.remove();
+                    }, 500);
+                }, 800);
+            }
+        }
+    }
+    
+    // Start boot sequence after brief delay
+    setTimeout(showNextBootMessage, 1000);
+}
+

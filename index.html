@@ -8,6 +8,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-container">
+            <div class="boot-sequence">
+                <div class="boot-logo">
+                    <div class="simple-logo">
+                        <div class="logo-circle">
+                            <span class="logo-text">DK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="boot-messages" id="boot-messages">
+                    <div class="boot-line">INITIALIZING SECURITY PROTOCOLS...</div>
+                </div>
+                <div class="loading-bar-container">
+                    <div class="loading-bar">
+                        <div class="loading-progress" id="loading-progress"></div>
+                    </div>
+                    <div class="loading-percentage" id="loading-percentage">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="cosmic-bg"></div>
     
     <nav class="navbar">
@@ -89,7 +113,7 @@
                     <div class="about-text">
                         <div class="about-hero">
                             <div class="about-image">
-                                <img src="headshot.png" alt="Dmitry Kolyvagin" class="headshot">
+                                <img src="headshot.jpeg" alt="Dmitry Kolyvagin" class="headshot">
                                 <div class="image-border"></div>
                             </div>
                             <div class="about-text-content">
@@ -97,6 +121,37 @@
                                     I'm Dmitry Kolyvagin, a cybersecurity engineer who thrives on solving tough challenges.
                                     With a passion for both red and blue teaming, I specialize in threat detection, vulnerability assessment, and building secure system architectures. 
                                 </p>
+                            </div>
+                        </div>
+                        
+                        <div class="achievement-metrics">
+                            <div class="metric-item">
+                                <div class="metric-value">
+                                    <div class="metric-number" data-target="40">0</div>
+                                    <div class="metric-symbol">%</div>
+                                </div>
+                                <div class="metric-label">SIEM Event Reduction</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">
+                                    <div class="metric-number" data-target="200">0</div>
+                                    <div class="metric-symbol">+</div>
+                                </div>
+                                <div class="metric-label">Security Policies Applied</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">
+                                    <div class="metric-number" data-target="1000">0</div>
+                                    <div class="metric-symbol">+</div>
+                                </div>
+                                <div class="metric-label">Hosts Hardened</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">
+                                    <div class="metric-number" data-target="100">0</div>
+                                    <div class="metric-symbol">+</div>
+                                </div>
+                                <div class="metric-label">Rules Tuned</div>
                             </div>
                         </div>
                         
@@ -178,7 +233,7 @@
                                     </div>
                                     <div class="achievement">
                                         <span class="achievement-icon">▶</span>
-                                        <span>Managed Azure security through CSPM tools and Azure Policies</span>
+                                        <span>Built a Cloud Security Program by deploying CSPM tool to enforce guardrails and reduce risk.</span>
                                     </div>
                                     <div class="achievement">
                                         <span class="achievement-icon">▶</span>
@@ -211,7 +266,7 @@
                                     </div>
                                     <div class="achievement">
                                         <span class="achievement-icon">▶</span>
-                                        <span>Managed DNS filtering and DLP strategies for endpoint security</span>
+                                        <span>Managed content filtering and DLP strategies for endpoint security</span>
                                     </div>
                                 </div>
                             </div>
@@ -305,45 +360,28 @@
             <div class="container">
                 <h2 class="section-title">CONTACT</h2>
                 <div class="contact-content">
-                    <div class="contact-grid">
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <div class="contact-icon">📧</div>
-                                <div class="contact-details">
-                                    <h3>Email</h3>
-                                    <a href="mailto:dmitry.kolyvagin@gmail.com">dmitry.kolyvagin@gmail.com</a>
-                                </div>
-                            </div>
-                            
-                            <div class="contact-item">
-                                <div class="contact-icon">💼</div>
-                                <div class="contact-details">
-                                    <h3>LinkedIn</h3>
-                                    <a href="https://www.linkedin.com/in/dmitry-kolyvagin/" target="_blank">linkedin.com/in/dmitry-kolyvagin</a>
-                                </div>
-                            </div>
-                            
-                            <div class="contact-item">
-                                <div class="contact-icon">🐙</div>
-                                <div class="contact-details">
-                                    <h3>GitHub</h3>
-                                    <a href="https://github.com/dkoly" target="_blank">github.com/dkoly</a>
-                                </div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-details">
+                                <h3>Email</h3>
+                                <a href="mailto:dmitry.kolyvagin@gmail.com">dmitry.kolyvagin@gmail.com</a>
                             </div>
                         </div>
                         
-                        <div class="contact-visual">
-                            <div class="cyber-sphere">
-                                <div class="sphere-ring ring-1"></div>
-                                <div class="sphere-ring ring-2"></div>
-                                <div class="sphere-ring ring-3"></div>
-                                <div class="sphere-core"></div>
+                        <div class="contact-item">
+                            <div class="contact-icon">💼</div>
+                            <div class="contact-details">
+                                <h3>LinkedIn</h3>
+                                <a href="https://www.linkedin.com/in/dmitry-kolyvagin/" target="_blank">linkedin.com/in/dmitry-kolyvagin</a>
                             </div>
-                            <div class="data-streams">
-                                <div class="stream stream-1"></div>
-                                <div class="stream stream-2"></div>
-                                <div class="stream stream-3"></div>
-                                <div class="stream stream-4"></div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">🐙</div>
+                            <div class="contact-details">
+                                <h3>GitHub</h3>
+                                <a href="https://github.com/dkoly" target="_blank">github.com/dkoly</a>
                             </div>
                         </div>
                     </div>
