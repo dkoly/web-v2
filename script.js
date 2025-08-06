@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAnimations();
     initializeParticleSystem();
     initializeTerminalAnimation();
+    initializeLabs();
 });
 
 function initializeNavigation() {
@@ -71,7 +72,7 @@ function initializeAnimations() {
         });
     }, observerOptions);
 
-    document.querySelectorAll('.skill-category, .cert-badge, .timeline-item, .achievement-metrics').forEach(el => {
+    document.querySelectorAll('.skill-category, .cert-badge, .timeline-item, .achievement-metrics, .box-card, .lab-stat').forEach(el => {
         observer.observe(el);
     });
 }
@@ -80,6 +81,7 @@ function animateElements(container) {
     const timeline = container.querySelectorAll('.timeline-item');
     const skills = container.querySelectorAll('.skill-category');
     const badges = container.querySelectorAll('.cert-badge');
+    const labStats = container.querySelectorAll('.lab-stat');
     
     timeline.forEach((item, index) => {
         setTimeout(() => {
@@ -101,10 +103,17 @@ function animateElements(container) {
             badge.style.transform = 'scale(1)';
         }, index * 150);
     });
+    
+    labStats.forEach((stat, index) => {
+        setTimeout(() => {
+            stat.style.opacity = '1';
+            stat.style.transform = 'translateY(0)';
+        }, index * 200);
+    });
 }
 
 function triggerSectionAnimation(section) {
-    const animatedElements = section.querySelectorAll('.skill-category, .cert-badge, .timeline-item');
+    const animatedElements = section.querySelectorAll('.skill-category, .cert-badge, .timeline-item, .lab-stat');
     animatedElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
@@ -112,6 +121,10 @@ function triggerSectionAnimation(section) {
     
     setTimeout(() => {
         animateElements(section);
+        // Special handling for labs section
+        if (section.id === 'labs') {
+            animateCounters();
+        }
     }, 100);
 }
 
@@ -311,6 +324,12 @@ style.textContent = `
         transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
+    .lab-stat {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
     .skill-category {
         transform: translateX(-30px);
     }
@@ -485,5 +504,273 @@ function initializeLoadingScreen() {
     
     // Start boot sequence after brief delay
     setTimeout(showNextBootMessage, 1000);
+}
+
+// Boxes data structure - easily maintainable
+const boxesData = [
+    {
+        name: "Admirer",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Web Enumeration", "FTP Anonymous"],
+        steps: [
+            "Initial foothold: FTP anonymous access revealed credentials and web files",
+            "Privilege escalation: Exposed local user credentials",
+            "Key learning: Always check if credentials are reused across different services (e.g., DB, SSH)"
+        ]
+    },
+    {
+        name: "Beep",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Web Application", "LFI", "Privilege Escalation"],
+        steps: [
+            "Initial foothold: Local File Inclusion in web application",
+            "Privilege escalation: Sudo privileges or kernel exploit",
+            "Key learning: LFI can lead to credential disclosure and system access"
+        ]
+    },
+    {
+        name: "Blocky",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Web Enumeration", "JAR Analysis", "SSH Credentials"],
+        steps: [
+            "Initial foothold: JAR file analysis revealed database credentials",
+            "Privilege escalation: Password reuse for SSH and sudo access",
+            "Key learning: Developers often reuse passwords across services"
+        ]
+    },
+    {
+        name: "Blunder",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Bludit CMS", "Brute Force", "Sudo CVE"],
+        steps: [
+            "Initial foothold: Bludit CMS brute force bypass and RCE",
+            "Privilege escalation: Sudo vulnerability (CVE-2019-14287)",
+            "Key learning: Always check sudo version for known CVEs"
+        ]
+    },
+    {
+        name: "Doctor",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["SSTI", "Log Poisoning", "Splunk Universal Forwarder"],
+        steps: [
+            "Initial foothold: Server-Side Template Injection in web application",
+            "Privilege escalation: Splunk Universal Forwarder exploitation",
+            "Key learning: SSTI can provide direct code execution capabilities"
+        ]
+    },
+    {
+        name: "FriendZone",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["DNS Zone Transfer", "SMB Enumeration", "LFI"],
+        steps: [
+            "Initial foothold: DNS zone transfer revealed subdomains and SMB shares",
+            "Privilege escalation: Web shell upload via SMB and execution via LFI",
+            "Key learning: DNS zone transfers can reveal hidden attack surface"
+        ]
+    },
+    {
+        name: "Frolic",
+        platform: "htb",
+        difficulty: "medium",
+        os: "linux",
+        techniques: ["Web Enumeration", "Buffer Overflow", "Binary Exploitation"],
+        steps: [
+            "Initial foothold: Web directory traversal and password cracking",
+            "Privilege escalation: Buffer overflow in custom binary",
+            "Key learning: Simple buffer overflows still exist in custom applications"
+        ]
+    },
+    {
+        name: "Access",
+        platform: "pg",
+        difficulty: "hard",
+        os: "windows",
+        techniques: ["Web Exploitation", "Active Directory", "Kerberoasting"],
+        steps: [
+            "Initial foothold: Reverse shell via file upload.",
+            "Privilege escalation: Kerberoastable account allowed to login and retrieve flag via SEVolumeManagePrivilege abuse",
+            "Key learning: Focus on low-hanging fruit first (e.g., Kerberosating) when targeting AD",
+        ]
+    },
+    {
+        name: "Algernon",
+        platform: "pg",
+        difficulty: "easy",
+        os: "windows",
+        techniques: ["Vulnerable Webmail Server", "File Upload", "Reverse Shell"],
+        steps: [
+            "Initial foothold: Exploited vulnerable CMS to get reverse shell",
+            "Privilege escalation: The webmail service running as NT Authority",
+            "Key learning: Enumeration is key"
+        ]
+    },
+    {
+        name: "Authby",
+        platform: "pg",
+        difficulty: "easy",
+        os: "windows",
+        techniques: ["Web Enumeration", "Hash Cracking", "Privilege Abuse"],
+        steps: [
+            "Initial foothold: Found exposed hash. Used it to login to FTP server to upload webshell.",
+            "Privilege escalation: Abused SEImpersonatePrivilege to get shell as NT Authority",
+        ]
+    },
+
+];
+
+function initializeLabs() {
+    renderBoxes(boxesData);
+    initializeFilters();
+    initializeModal();
+    updateLabsStats();
+}
+
+function renderBoxes(boxes) {
+    const grid = document.getElementById('boxes-grid');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    
+    boxes.forEach((box, index) => {
+        const boxElement = document.createElement('div');
+        boxElement.className = `box-card ${box.platform} ${box.difficulty} ${box.os}`;
+        boxElement.innerHTML = `
+            <div class="box-header">
+                <h3 class="box-name">${box.name}</h3>
+                <div class="box-badges">
+                    <span class="badge platform-badge ${box.platform}">${box.platform.toUpperCase()}</span>
+                    <span class="badge difficulty-badge ${box.difficulty}">${box.difficulty.toUpperCase()}</span>
+                    <span class="badge os-badge ${box.os}">${box.os}</span>
+                </div>
+            </div>
+            <div class="box-techniques">
+                ${box.techniques.slice(0, 3).map(tech => `<span class="technique-tag">${tech}</span>`).join('')}
+            </div>
+            <div class="box-footer">
+                <button class="view-writeup-btn" data-box="${box.name}">VIEW WRITEUP</button>
+            </div>
+        `;
+        
+        // Set initial styles for animation
+        boxElement.style.opacity = '1';
+        boxElement.style.transform = 'translateY(0)';
+        
+        grid.appendChild(boxElement);
+        
+        // Add staggered entrance animation
+        setTimeout(() => {
+            boxElement.style.transition = 'all 0.3s ease';
+        }, index * 100);
+    });
+    
+    // Add click handlers for writeup buttons
+    document.querySelectorAll('.view-writeup-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const boxName = this.getAttribute('data-box');
+            const box = boxesData.find(b => b.name === boxName);
+            if (box) {
+                showModal(box);
+            }
+        });
+    });
+}
+
+function initializeFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.getAttribute('data-filter');
+            filterBoxes(filter);
+        });
+    });
+}
+
+function filterBoxes(filter) {
+    const boxes = document.querySelectorAll('.box-card');
+    
+    boxes.forEach(box => {
+        const shouldShow = filter === 'all' || box.classList.contains(filter);
+        
+        if (shouldShow) {
+            box.style.display = 'block';
+            box.style.opacity = '0';
+            setTimeout(() => {
+                box.style.opacity = '1';
+                box.style.transform = 'translateY(0)';
+            }, 100);
+        } else {
+            box.style.opacity = '0';
+            box.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                box.style.display = 'none';
+            }, 300);
+        }
+    });
+}
+
+function initializeModal() {
+    const modal = document.getElementById('box-modal');
+    const closeBtn = document.querySelector('.modal-close');
+    
+    closeBtn.addEventListener('click', function() {
+        modal.classList.remove('active');
+    });
+    
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+}
+
+function showModal(box) {
+    const modal = document.getElementById('box-modal');
+    
+    document.getElementById('modal-title').textContent = box.name;
+    document.getElementById('modal-platform').textContent = box.platform.toUpperCase();
+    document.getElementById('modal-platform').className = `badge platform-badge ${box.platform}`;
+    document.getElementById('modal-difficulty').textContent = box.difficulty.toUpperCase();
+    document.getElementById('modal-difficulty').className = `badge difficulty-badge ${box.difficulty}`;
+    document.getElementById('modal-os').textContent = box.os;
+    document.getElementById('modal-os').className = `badge os-badge ${box.os}`;
+    
+    // Techniques
+    const techniquesContainer = document.getElementById('modal-techniques');
+    techniquesContainer.innerHTML = box.techniques.map(tech => 
+        `<span class="technique-tag">${tech}</span>`
+    ).join('');
+    
+    // Steps
+    const stepsList = document.getElementById('modal-steps');
+    stepsList.innerHTML = box.steps.map(step => `<li>${step}</li>`).join('');
+    
+    modal.classList.add('active');
+}
+
+function updateLabsStats() {
+    const totalBoxes = boxesData.length;
+    const platforms = [...new Set(boxesData.map(box => box.platform))].length;
+    const techniques = [...new Set(boxesData.flatMap(box => box.techniques))].length;
+    
+    document.getElementById('total-boxes').textContent = totalBoxes;
+    document.getElementById('platforms').textContent = platforms;
+    document.getElementById('techniques').textContent = techniques + '+';
 }
 
