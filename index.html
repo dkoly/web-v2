@@ -43,6 +43,7 @@
                 <li><a href="#home" class="nav-link active">HOME</a></li>
                 <li><a href="#about" class="nav-link">ABOUT</a></li>
                 <li><a href="#experience" class="nav-link">EXPERIENCE</a></li>
+                <li><a href="#labs" class="nav-link">LABS</a></li>
                 <li><a href="#contact" class="nav-link">CONTACT</a></li>
             </ul>
         </div>
@@ -127,20 +128,6 @@
                         <div class="achievement-metrics">
                             <div class="metric-item">
                                 <div class="metric-value">
-                                    <div class="metric-number" data-target="40">0</div>
-                                    <div class="metric-symbol">%</div>
-                                </div>
-                                <div class="metric-label">SIEM Event Reduction</div>
-                            </div>
-                            <div class="metric-item">
-                                <div class="metric-value">
-                                    <div class="metric-number" data-target="200">0</div>
-                                    <div class="metric-symbol">+</div>
-                                </div>
-                                <div class="metric-label">Security Policies Applied</div>
-                            </div>
-                            <div class="metric-item">
-                                <div class="metric-value">
                                     <div class="metric-number" data-target="1000">0</div>
                                     <div class="metric-symbol">+</div>
                                 </div>
@@ -148,10 +135,24 @@
                             </div>
                             <div class="metric-item">
                                 <div class="metric-value">
-                                    <div class="metric-number" data-target="100">0</div>
+                                    <div class="metric-number" data-target="300">0</div>
                                     <div class="metric-symbol">+</div>
                                 </div>
-                                <div class="metric-label">Rules Tuned</div>
+                                <div class="metric-label">Security Agents Deployed</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">
+                                    <div class="metric-number" data-target="50">0</div>
+                                    <div class="metric-symbol">+</div>
+                                </div>
+                                <div class="metric-label">Security Policies Engineered</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">
+                                    <div class="metric-number" data-target="20">0</div>
+                                    <div class="metric-symbol">+</div>
+                                </div>
+                                <div class="metric-label">API Integrations Built</div>
                             </div>
                         </div>
                         
@@ -295,7 +296,32 @@
                                     </div>
                                     <div class="achievement">
                                         <span class="achievement-icon">▶</span>
-                                        <span>Maintained hardware across Intel, HP, Dell, Cisco, and Arista environments</span>
+                                        <span>Achieved 99.9% uptime across critical infrastructure through proactive maintenance and monitoring</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Center Technical Analyst -->
+                        <div class="timeline-item">
+                            <div class="timeline-node">
+                                <div class="node-icon">🔧</div>
+                                <div class="node-glow"></div>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="timeline-header">
+                                    <h3>Data Center Technical Analyst</h3>
+                                    <span class="timeline-company">Citi</span>
+                                    <span class="timeline-date">Apr 2020 - Oct 2020</span>
+                                </div>
+                                <div class="timeline-achievements">
+                                    <div class="achievement">
+                                        <span class="achievement-icon">▶</span>
+                                        <span>Provided 24/7 on-site operations support for 10,000+ infrastructure equipment</span>
+                                    </div>
+                                    <div class="achievement">
+                                        <span class="achievement-icon">▶</span>
+                                        <span>Managed complete device lifecycle including installation, troubleshooting, decommissioning, and ticketing system documentation</span>
                                     </div>
                                 </div>
                             </div>
@@ -311,7 +337,7 @@
                                 <div class="timeline-header">
                                     <h3>System Services Representative</h3>
                                     <span class="timeline-company">IBM</span>
-                                    <span class="timeline-date">Sep 2019 - Sep 2020</span>
+                                    <span class="timeline-date">Oct 2019 - Apr 2020</span>
                                 </div>
                                 <div class="timeline-achievements">
                                     <div class="achievement">
@@ -354,6 +380,66 @@
                 </div>
             </div>
         </section>
+
+        <!-- LABS SECTION -->
+        <section id="labs" class="section">
+            <div class="container">
+                <h2 class="section-title">SECURITY LABS</h2>
+                <div class="labs-content">
+                    <div class="labs-stats">
+                        <div class="lab-stat">
+                            <span class="stat-number" id="total-boxes">50</span>
+                            <span class="stat-label">Boxes Completed</span>
+                        </div>
+                        <div class="lab-stat">
+                            <span class="stat-number" id="platforms">2</span>
+                            <span class="stat-label">Platforms</span>
+                        </div>
+                        <div class="lab-stat">
+                            <span class="stat-number" id="techniques">25+</span>
+                            <span class="stat-label">Techniques Mastered</span>
+                        </div>
+                    </div>
+                    
+                    <div class="labs-filters">
+                        <button class="filter-btn active" data-filter="all">ALL</button>
+                        <button class="filter-btn" data-filter="htb">HACK THE BOX</button>
+                        <button class="filter-btn" data-filter="pg">PROVING GROUNDS</button>
+                        <button class="filter-btn" data-filter="easy">EASY</button>
+                        <button class="filter-btn" data-filter="medium">MEDIUM</button>
+                        <button class="filter-btn" data-filter="hard">HARD</button>
+                    </div>
+                    
+                    <div class="boxes-grid" id="boxes-grid">
+                        <!-- Boxes will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOX MODAL -->
+        <div id="box-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title"></h3>
+                    <span class="modal-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-info">
+                        <div class="modal-badges">
+                            <span class="badge platform-badge" id="modal-platform"></span>
+                            <span class="badge difficulty-badge" id="modal-difficulty"></span>
+                            <span class="badge os-badge" id="modal-os"></span>
+                        </div>
+                        <div class="modal-techniques" id="modal-techniques"></div>
+                    </div>
+                    <div class="modal-writeup">
+                        <h4>Key Steps:</h4>
+                        <ul id="modal-steps"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- CONTACT SECTION -->
         <section id="contact" class="section">

@@ -1349,3 +1349,444 @@ body {
         gap: 1rem;
     }
 }
+
+/* Labs Section Styles */
+.labs-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.labs-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.lab-stat {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(31, 31, 35, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    min-width: 150px;
+    transition: all 0.3s ease;
+}
+
+.lab-stat:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 15px 35px rgba(0, 255, 255, 0.2);
+}
+
+.lab-stat .stat-number {
+    display: block;
+    font-family: 'Orbitron', monospace;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.lab-stat .stat-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.labs-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.filter-btn {
+    padding: 0.8rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    color: var(--text-muted);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.filter-btn:hover::before {
+    left: 100%;
+}
+
+.filter-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: var(--primary-color);
+    color: var(--bg-dark);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+}
+
+.boxes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.box-card {
+    background: rgba(31, 31, 35, 0.7);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.box-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.05), transparent);
+    transition: left 0.5s ease;
+}
+
+.box-card:hover::before {
+    left: 100%;
+}
+
+.box-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 15px 35px rgba(0, 255, 255, 0.2);
+}
+
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.box-name {
+    font-family: 'Orbitron', monospace;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.box-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.platform-badge.htb {
+    background: linear-gradient(45deg, #9fef00, #7cb342);
+    color: #1a1a1a;
+}
+
+.platform-badge.pg {
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    color: #1a1a1a;
+}
+
+.difficulty-badge.easy {
+    background: linear-gradient(45deg, var(--success-color), #059669);
+    color: white;
+}
+
+.difficulty-badge.medium {
+    background: linear-gradient(45deg, var(--warning-color), #d97706);
+    color: white;
+}
+
+.difficulty-badge.hard {
+    background: linear-gradient(45deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.os-badge.windows {
+    background: linear-gradient(45deg, #0078d4, #005a9e);
+    color: white;
+}
+
+.os-badge.linux {
+    background: linear-gradient(45deg, #fcc624, #f39c12);
+    color: #1a1a1a;
+}
+
+.box-techniques {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.technique-tag {
+    padding: 0.4rem 0.8rem;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 15px;
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.box-footer {
+    text-align: center;
+}
+
+.view-writeup-btn {
+    padding: 0.8rem 2rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 25px;
+    color: var(--bg-dark);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.view-writeup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 255, 255, 0.4);
+}
+
+.view-writeup-btn:active {
+    transform: translateY(0);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+    border: 1px solid var(--primary-color);
+    border-radius: 20px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from { 
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 2rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+    font-family: 'Orbitron', monospace;
+    color: var(--text-light);
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.modal-close {
+    font-size: 2rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: var(--primary-color);
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-info {
+    margin-bottom: 2rem;
+}
+
+.modal-badges {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.modal-techniques {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-writeup h4 {
+    font-family: 'Orbitron', monospace;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.modal-writeup ul {
+    list-style: none;
+    padding: 0;
+}
+
+.modal-writeup li {
+    padding: 0.5rem 0;
+    color: var(--text-muted);
+    line-height: 1.6;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.modal-writeup li::before {
+    content: "▶";
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* Mobile Labs Styles */
+@media (max-width: 768px) {
+    .labs-stats {
+        gap: 1.5rem;
+    }
+    
+    .lab-stat {
+        min-width: 120px;
+        padding: 1rem;
+    }
+    
+    .lab-stat .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .boxes-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .box-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .box-badges {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .labs-filters {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .modal-header {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .modal-badges {
+        gap: 0.5rem;
+    }
+}
