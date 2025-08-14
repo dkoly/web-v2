@@ -509,51 +509,15 @@ function initializeLoadingScreen() {
 // Boxes data structure - easily maintainable
 const boxesData = [
     {
-        name: "Admirer",
-        platform: "htb",
-        difficulty: "easy",
-        os: "linux",
-        techniques: ["Web Enumeration", "FTP Anonymous"],
-        steps: [
-            "Initial foothold: FTP anonymous access revealed credentials and web files",
-            "Privilege escalation: Exposed local user credentials",
-            "Key learning: Always check if credentials are reused across different services (e.g., DB, SSH)"
-        ]
-    },
-    {
         name: "Beep",
         platform: "htb",
         difficulty: "easy",
         os: "linux",
-        techniques: ["Web Application", "LFI", "Privilege Escalation"],
+        techniques: ["Directory Traversal", "Shellshock", "SSH Bruteforce"],
         steps: [
-            "Initial foothold: Local File Inclusion in web application",
-            "Privilege escalation: Sudo privileges or kernel exploit",
-            "Key learning: LFI can lead to credential disclosure and system access"
-        ]
-    },
-    {
-        name: "Blocky",
-        platform: "htb",
-        difficulty: "easy",
-        os: "linux",
-        techniques: ["Web Enumeration", "JAR Analysis", "SSH Credentials"],
-        steps: [
-            "Initial foothold: JAR file analysis revealed database credentials",
-            "Privilege escalation: Password reuse for SSH and sudo access",
-            "Key learning: Developers often reuse passwords across services"
-        ]
-    },
-    {
-        name: "Blunder",
-        platform: "htb",
-        difficulty: "easy",
-        os: "linux",
-        techniques: ["Bludit CMS", "Brute Force", "Sudo CVE"],
-        steps: [
-            "Initial foothold: Bludit CMS brute force bypass and RCE",
-            "Privilege escalation: Sudo vulnerability (CVE-2019-14287)",
-            "Key learning: Always check sudo version for known CVEs"
+            "Initial foothold: Exploited Elastix LFI vulnerability to read /etc/passwd and extract credentials",
+            "Privilege escalation: Used shellshock vulnerability on port 10000 to execute commands as root",
+            "Key learning: Multiple attack vectors including LFI, credential harvesting, and shellshock exploitation"
         ]
     },
     {
@@ -561,35 +525,215 @@ const boxesData = [
         platform: "htb",
         difficulty: "easy",
         os: "linux",
-        techniques: ["SSTI", "Log Poisoning", "Splunk Universal Forwarder"],
+        techniques: ["SSTI", "Log Poisoning", "Splunk Forwarder"],
         steps: [
-            "Initial foothold: Server-Side Template Injection in web application",
-            "Privilege escalation: Splunk Universal Forwarder exploitation",
-            "Key learning: SSTI can provide direct code execution capabilities"
+            "Initial foothold: Server-Side Template Injection (SSTI) in Jinja2 template engine via blog message",
+            "Privilege escalation: Exploited Splunk forwarder running as root using SplunkWhisperer2",
+            "Key learning: SSTI detection and exploitation, plus privilege escalation via misconfigured services"
         ]
     },
     {
-        name: "FriendZone",
+        name: "Sense",
         platform: "htb",
         difficulty: "easy",
         os: "linux",
-        techniques: ["DNS Zone Transfer", "SMB Enumeration", "LFI"],
+        techniques: ["CVE-2014-4688", "pfSense", "Directory Enumeration"],
         steps: [
-            "Initial foothold: DNS zone transfer revealed subdomains and SMB shares",
-            "Privilege escalation: Web shell upload via SMB and execution via LFI",
-            "Key learning: DNS zone transfers can reveal hidden attack surface"
+            "Initial foothold: Found system-users.txt via directory enumeration on pfSense system",
+            "Privilege escalation: Exploited CVE-2014-4688 in pfSense to gain shell access",
+            "Key learning: Importance of directory enumeration and researching CVEs for specific software versions"
+        ]
+    },
+    {
+        name: "Admirer",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["FTP Enumeration", "Database Credentials", "Python Library Hijacking"],
+        steps: [
+            "Initial foothold: Enumerated FTP to find backup files containing database credentials",
+            "Privilege escalation: Exploited sudo rights on admin script using Python library hijacking",
+            "Key learning: Credential reuse across services and Python path manipulation for privilege escalation"
+        ]
+    },
+    {
+        name: "Blocky",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["JAR File Analysis", "Password Reuse", "Sudo Privileges"],
+        steps: [
+            "Initial foothold: Reverse engineered JAR files to extract hardcoded database credentials",
+            "Privilege escalation: Reused password for SSH access, then leveraged full sudo privileges",
+            "Key learning: Reverse engineering compiled files and avoiding password reuse across accounts"
+        ]
+    },
+    {
+        name: "Blunder",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Bludit CMS", "Brute Force Bypass", "CVE-2019-14287"],
+        steps: [
+            "Initial foothold: Bypassed Bludit CMS brute force protection and exploited directory traversal",
+            "Privilege escalation: Exploited sudo vulnerability CVE-2019-14287 using user ID -1",
+            "Key learning: CMS-specific vulnerabilities and sudo version exploits for privilege escalation"
+        ]
+    },
+    {
+        name: "Friendzone",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["SMB Enumeration", "DNS Zone Transfer", "LFI"],
+        steps: [
+            "Initial foothold: Found credentials via SMB shares and performed DNS zone transfer for subdomain discovery",
+            "Privilege escalation: Uploaded reverse shell via SMB and included it through LFI vulnerability",
+            "Key learning: Multi-protocol enumeration and chaining SMB access with web vulnerabilities"
         ]
     },
     {
         name: "Frolic",
         platform: "htb",
-        difficulty: "medium",
+        difficulty: "easy",
         os: "linux",
-        techniques: ["Web Enumeration", "Buffer Overflow", "Binary Exploitation"],
+        techniques: ["OOK Cipher", "PlaySMS RCE", "Buffer Overflow"],
         steps: [
-            "Initial foothold: Web directory traversal and password cracking",
-            "Privilege escalation: Buffer overflow in custom binary",
-            "Key learning: Simple buffer overflows still exist in custom applications"
+            "Initial foothold: Decoded OOK cipher and cracked ZIP files to access PlaySMS with RCE vulnerability",
+            "Privilege escalation: Attempted buffer overflow on custom SUID binary but escalation incomplete",
+            "Key learning: Multi-layer decoding challenges and identifying custom binaries for privilege escalation"
+        ]
+    },
+    {
+        name: "Irked",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["UnrealIRCD Backdoor", "Steganography", "SUID Exploitation"],
+        steps: [
+            "Initial foothold: Exploited UnrealIRCD 3.2.8.1 backdoor vulnerability for command execution",
+            "Privilege escalation: Used steganography to extract password, then exploited custom SUID binary",
+            "Key learning: IRC service exploitation and combining steganography with binary exploitation"
+        ]
+    },
+    {
+        name: "Mirai",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Default Credentials", "Pi-hole", "USB Recovery"],
+        steps: [
+            "Initial foothold: SSH access using default Raspberry Pi credentials (pi/raspberry)",
+            "Privilege escalation: Already had sudo access, found root flag in attached USB device",
+            "Key learning: IoT device security and the importance of changing default credentials"
+        ]
+    },
+    {
+        name: "Networked",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["File Upload Bypass", "Cron Job", "Network Script Injection"],
+        steps: [
+            "Initial foothold: Bypassed file upload validation using GIF magic bytes with PHP backdoor",
+            "Privilege escalation: Exploited network configuration script via command injection in interface names",
+            "Key learning: File upload filter bypasses and command injection in system configuration scripts"
+        ]
+    },
+    {
+        name: "OpenAdmin",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["OpenNetAdmin RCE", "SSH Key Cracking", "Nano GTFOBins"],
+        steps: [
+            "Initial foothold: Exploited OpenNetAdmin 18.1.1 RCE vulnerability for initial shell access",
+            "Privilege escalation: Cracked SSH private key password and exploited nano sudo privileges",
+            "Key learning: Web application CVE exploitation and GTFOBins for breaking out of restricted commands"
+        ]
+    },
+    {
+        name: "Postman",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Redis Exploitation", "SSH Key Upload", "Webmin RCE"],
+        steps: [
+            "Initial foothold: Exploited unauthenticated Redis to upload SSH public key for access",
+            "Privilege escalation: Used cracked SSH key password to access Webmin and exploit RCE vulnerability",
+            "Key learning: Redis security misconfigurations and credential reuse across different services"
+        ]
+    },
+    {
+        name: "Shoppy",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["NoSQL Injection", "Password Cracking", "Docker Escape"],
+        steps: [
+            "Initial foothold: NoSQL injection bypass on login page to access admin panel and extract hashes",
+            "Privilege escalation: Used cracked credentials to access Mattermost, then Docker escape for root",
+            "Key learning: NoSQL injection techniques and Docker container escape methods"
+        ]
+    },
+    {
+        name: "Sunday",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Finger Enumeration", "Password Cracking", "Sudo Wget"],
+        steps: [
+            "Initial foothold: Used finger service to enumerate users, then brute forced SSH with default passwords",
+            "Privilege escalation: Exploited sudo wget permissions to read root flag directly",
+            "Key learning: User enumeration via finger service and creative use of sudo file read permissions"
+        ]
+    },
+    {
+        name: "Swagshop",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Magento CMS", "Admin Creation", "RCE Attempts"],
+        steps: [
+            "Initial foothold: Used Magento exploits to create admin account on CMS",
+            "Privilege escalation: Multiple RCE attempts failed including authenticated exploits and image uploads",
+            "Key learning: Magento security issues but highlights that not all theoretical exploits work in practice"
+        ]
+    },
+    {
+        name: "Tabby",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Apache Tomcat", "LFI", "Directory Enumeration"],
+        steps: [
+            "Initial foothold: Discovered Apache Tomcat 9.0.31 and attempted various enumeration techniques",
+            "Privilege escalation: Unable to complete exploitation despite identifying potential attack vectors",
+            "Key learning: Not all discovered services lead to successful exploitation without proper credentials"
+        ]
+    },
+    {
+        name: "Traverxec",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Nostromo RCE", "SSH Key Cracking", "Journalctl GTFOBins"],
+        steps: [
+            "Initial foothold: Exploited Nostromo 1.9.6 directory traversal vulnerability for RCE",
+            "Privilege escalation: Cracked SSH private key and exploited journalctl in less pager for root shell",
+            "Key learning: Web server specific vulnerabilities and terminal manipulation for privilege escalation"
+        ]
+    },
+    {
+        name: "Valentine",
+        platform: "htb",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Heartbleed", "Memory Disclosure", "SSH Key Extraction"],
+        steps: [
+            "Initial foothold: Exploited Heartbleed vulnerability to extract private SSH key from memory",
+            "Privilege escalation: Found tmux session running as root and attached to gain root access",
+            "Key learning: SSL vulnerability exploitation and process enumeration for privilege escalation"
         ]
     },
     {
@@ -599,9 +743,9 @@ const boxesData = [
         os: "windows",
         techniques: ["Web Exploitation", "Active Directory", "Kerberoasting"],
         steps: [
-            "Initial foothold: Reverse shell via file upload.",
+            "Initial foothold: Reverse shell via file upload",
             "Privilege escalation: Kerberoastable account allowed to login and retrieve flag via SEVolumeManagePrivilege abuse",
-            "Key learning: Focus on low-hanging fruit first (e.g., Kerberosating) when targeting AD",
+            "Key learning: Focus on low-hanging fruit first (e.g., Kerberoasting) when targeting AD"
         ]
     },
     {
@@ -623,11 +767,287 @@ const boxesData = [
         os: "windows",
         techniques: ["Web Enumeration", "Hash Cracking", "Privilege Abuse"],
         steps: [
-            "Initial foothold: Found exposed hash. Used it to login to FTP server to upload webshell.",
+            "Initial foothold: Found exposed hash. Used it to login to FTP server to upload webshell",
             "Privilege escalation: Abused SEImpersonatePrivilege to get shell as NT Authority",
+            "Key learning: Always check for exposed credentials and Windows privilege escalation techniques"
         ]
     },
-
+    {
+        name: "Apex",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Directory Traversal", "OpenEMR RCE", "Password Reuse"],
+        steps: [
+            "Initial foothold: Exploited directory traversal in Responsive File Manager to extract OpenEMR database credentials",
+            "Privilege escalation: Reused cracked admin password for root access after gaining shell via authenticated OpenEMR RCE",
+            "Key learning: Focus on one web endpoint at a time and leverage credential reuse across services"
+        ]
+    },
+    {
+        name: "Astronaut",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Grav CMS", "RCE", "SUID Binary"],
+        steps: [
+            "Initial foothold: Exploited Grav CMS vulnerability to gain remote code execution",
+            "Privilege escalation: Exploited SUID binary for root access",
+            "Key learning: CMS vulnerabilities can provide direct system access when properly exploited"
+        ]
+    },
+    {
+        name: "Bitforge",
+        platform: "pg",
+        difficulty: "medium",
+        os: "linux",
+        techniques: ["Web Application", "Command Injection", "Privilege Escalation"],
+        steps: [
+            "Initial foothold: Discovered command injection vulnerability in web application",
+            "Privilege escalation: Exploited system misconfiguration to gain root privileges",
+            "Key learning: Web application input validation flaws can lead to complete system compromise"
+        ]
+    },
+    {
+        name: "Bratarina",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["SMTP Enumeration", "OpenSSH", "Weak Credentials"],
+        steps: [
+            "Initial foothold: Enumerated SMTP service and found weak SSH credentials",
+            "Privilege escalation: Leveraged sudo privileges to gain root access",
+            "Key learning: Thorough service enumeration often reveals credential-based attack vectors"
+        ]
+    },
+    {
+        name: "Bullybox",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Web Enumeration", "File Upload", "Privilege Escalation"],
+        steps: [
+            "Initial foothold: Exploited file upload vulnerability in web application",
+            "Privilege escalation: Found and exploited system misconfiguration for root access",
+            "Key learning: File upload vulnerabilities remain a common and effective attack vector"
+        ]
+    },
+    {
+        name: "Clamav",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Sendmail", "Mail Transfer Agent", "Local Privilege Escalation"],
+        steps: [
+            "Initial foothold: Exploited Sendmail vulnerability to gain initial access",
+            "Privilege escalation: Found and exploited local privilege escalation vulnerability",
+            "Key learning: Mail services often contain vulnerabilities that lead to system compromise"
+        ]
+    },
+    {
+        name: "Cockpit",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Cockpit Service", "Weak Authentication", "System Access"],
+        steps: [
+            "Initial foothold: Gained access through Cockpit web interface with weak credentials",
+            "Privilege escalation: Already had elevated privileges through Cockpit interface",
+            "Key learning: Web-based system administration tools can provide direct high-privilege access"
+        ]
+    },
+    {
+        name: "Exfiltrated",
+        platform: "pg",
+        difficulty: "medium",
+        os: "linux",
+        techniques: ["Web Application", "SQL Injection", "File Disclosure"],
+        steps: [
+            "Initial foothold: Exploited SQL injection vulnerability to extract sensitive information",
+            "Privilege escalation: Used disclosed credentials to gain system access and escalate privileges",
+            "Key learning: SQL injection can lead to complete data exfiltration and system compromise"
+        ]
+    },
+    {
+        name: "Extplorer",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["eXtplorer", "File Manager", "RCE"],
+        steps: [
+            "Initial foothold: Exploited eXtplorer file manager vulnerability for remote code execution",
+            "Privilege escalation: Found system misconfiguration allowing privilege escalation",
+            "Key learning: Web-based file managers often contain vulnerabilities leading to code execution"
+        ]
+    },
+    {
+        name: "Fantastic",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Web Application", "Directory Traversal", "Configuration Files"],
+        steps: [
+            "Initial foothold: Used directory traversal to access sensitive configuration files",
+            "Privilege escalation: Leveraged exposed credentials for privilege escalation",
+            "Key learning: Directory traversal vulnerabilities can expose critical system information"
+        ]
+    },
+    {
+        name: "Fired",
+        platform: "pg",
+        difficulty: "medium",
+        os: "linux",
+        techniques: ["Web Enumeration", "Exploitation", "System Misconfiguration"],
+        steps: [
+            "Initial foothold: Discovered and exploited web application vulnerability",
+            "Privilege escalation: Exploited system misconfiguration to gain root access",
+            "Key learning: Comprehensive enumeration reveals multiple attack vectors"
+        ]
+    },
+    {
+        name: "Flu",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Web Application", "SQLi", "File Inclusion"],
+        steps: [
+            "Initial foothold: Exploited SQL injection to gain initial access",
+            "Privilege escalation: Used file inclusion vulnerability to escalate privileges",
+            "Key learning: Multiple web vulnerabilities can be chained for complete compromise"
+        ]
+    },
+    {
+        name: "Hawat",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Web Enumeration", "Python Script", "Privilege Escalation"],
+        steps: [
+            "Initial foothold: Found and exploited vulnerable Python script in web application",
+            "Privilege escalation: Leveraged script execution context for privilege escalation",
+            "Key learning: Custom scripts often contain vulnerabilities not found in standard applications"
+        ]
+    },
+    {
+        name: "Hetemit",
+        platform: "pg",
+        difficulty: "medium",
+        os: "linux",
+        techniques: ["Web Application", "Hash Cracking", "System Exploitation"],
+        steps: [
+            "Initial foothold: Extracted and cracked password hashes from web application",
+            "Privilege escalation: Used cracked credentials to gain system access and escalate privileges",
+            "Key learning: Password hash extraction and cracking remain effective attack methods"
+        ]
+    },
+    {
+        name: "Levram",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Web Application", "Command Injection", "SUID Exploitation"],
+        steps: [
+            "Initial foothold: Exploited command injection vulnerability in web application",
+            "Privilege escalation: Found and exploited SUID binary for root access",
+            "Key learning: Command injection combined with SUID exploitation provides reliable privilege escalation"
+        ]
+    },
+    {
+        name: "Wombo",
+        platform: "pg",
+        difficulty: "easy",
+        os: "linux",
+        techniques: ["Redis", "Unauthenticated Access", "SSH Key Upload"],
+        steps: [
+            "Initial foothold: Exploited unauthenticated Redis instance to upload SSH public key",
+            "Privilege escalation: Used Redis access to escalate privileges through system misconfigurations",
+            "Key learning: Unauthenticated Redis instances provide multiple paths to system compromise"
+        ]
+    },
+    {
+        name: "Hokkaido",
+        platform: "pg",
+        difficulty: "medium",
+        os: "windows",
+        techniques: ["Web Application", "File Upload", "Windows Privilege Escalation"],
+        steps: [
+            "Initial foothold: Exploited file upload vulnerability to gain initial system access",
+            "Privilege escalation: Used Windows privilege escalation techniques to gain administrator access",
+            "Key learning: File upload vulnerabilities on Windows systems often lead to complete compromise"
+        ]
+    },
+    {
+        name: "Hutch",
+        platform: "pg",
+        difficulty: "medium",
+        os: "windows",
+        techniques: ["Active Directory", "Kerberos", "Privilege Escalation"],
+        steps: [
+            "Initial foothold: Exploited Kerberos authentication weakness to gain domain access",
+            "Privilege escalation: Used Active Directory misconfigurations for privilege escalation",
+            "Key learning: Active Directory environments provide multiple privilege escalation paths"
+        ]
+    },
+    {
+        name: "Internal",
+        platform: "pg",
+        difficulty: "medium",
+        os: "windows",
+        techniques: ["SMB Enumeration", "Credential Harvesting", "Lateral Movement"],
+        steps: [
+            "Initial foothold: Enumerated SMB shares to discover and harvest credentials",
+            "Privilege escalation: Used harvested credentials for lateral movement and privilege escalation",
+            "Key learning: SMB enumeration often reveals credentials enabling further compromise"
+        ]
+    },
+    {
+        name: "Kevin",
+        platform: "pg",
+        difficulty: "easy",
+        os: "windows",
+        techniques: ["Web Application", "Credential Exposure", "Windows Services"],
+        steps: [
+            "Initial foothold: Found exposed credentials in web application configuration",
+            "Privilege escalation: Leveraged service account privileges for system access",
+            "Key learning: Configuration files often contain credentials enabling system compromise"
+        ]
+    },
+    {
+        name: "Mice",
+        platform: "pg",
+        difficulty: "medium",
+        os: "windows",
+        techniques: ["JuiceShop", "Web Exploitation", "Windows Escalation"],
+        steps: [
+            "Initial foothold: Exploited JuiceShop application vulnerabilities to gain access",
+            "Privilege escalation: Used Windows-specific privilege escalation techniques",
+            "Key learning: Known vulnerable applications provide reliable practice for exploitation techniques"
+        ]
+    },
+    {
+        name: "Monster",
+        platform: "pg",
+        difficulty: "hard",
+        os: "windows",
+        techniques: ["Complex Exploitation", "Multi-Stage Attack", "Advanced Persistence"],
+        steps: [
+            "Initial foothold: Executed complex multi-stage attack to gain initial system access",
+            "Privilege escalation: Used advanced Windows techniques for privilege escalation and persistence",
+            "Key learning: Complex targets require methodical approach and multiple exploitation techniques"
+        ]
+    },
+    {
+        name: "Squid",
+        platform: "pg",
+        difficulty: "medium",
+        os: "windows",
+        techniques: ["Proxy Services", "Network Pivoting", "Credential Harvesting"],
+        steps: [
+            "Initial foothold: Exploited Squid proxy service to gain network access",
+            "Privilege escalation: Used network pivoting and credential harvesting for privilege escalation",
+            "Key learning: Proxy services can provide network access and pivoting opportunities"
+        ]
+    }
 ];
 
 function initializeLabs() {
