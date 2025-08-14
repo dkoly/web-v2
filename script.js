@@ -174,37 +174,37 @@ function initializeTerminalAnimation() {
     
     const scenarios = [
         {
-            command: 'nmap -sS -O 192.168.1.0/24',
+            command: 'threat-assess --network enterprise',
             outputs: [
-                'Starting Nmap 7.94 ( https://nmap.org )',
-                'Nmap scan report for 192.168.1.1',
-                'Host is up (0.001s latency).',
-                'PORT     STATE SERVICE',
-                '22/tcp   open  ssh',
-                '80/tcp   open  http',
-                '443/tcp  open  https'
+                '🔍 Initiating threat assessment...',
+                '📊 Analyzing network architecture',
+                '🛡️  Checking security posture',
+                '⚠️  2 medium-risk vulnerabilities detected',
+                '✅ Firewall rules: COMPLIANT'
             ],
-            finalOutput: 'Nmap done: 254 IP addresses scanned'
+            finalOutput: 'Risk assessment: ACCEPTABLE'
         },
         {
-            command: 'gobuster dir -u https://target.com -w common.txt',
+            command: 'siem-query --alerts last-24h',
             outputs: [
-                'Gobuster v3.6',
-                'by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)',
-                '===============================================================',
-                'Starting gobuster in directory enumeration mode'
+                '📈 Querying SIEM database...',
+                '🚨 Processing security events',
+                '🔒 Authentication anomalies: 3',
+                '🌐 Network intrusions blocked: 47',
+                '📋 Generating threat intelligence'
             ],
-            finalOutput: 'Found 12 directories - scan complete'
+            finalOutput: 'Threat landscape: MONITORED'
         },
         {
-            command: 'nikto -h https://target.com',
+            command: 'vuln-scan --criticality high',
             outputs: [
-                '- Nikto v2.5.0',
-                '+ Target IP:          10.0.0.1',
-                '+ Target Hostname:    target.com',
-                '+ Scanning target.com...'
+                '🔧 Starting vulnerability scan...',
+                '🎯 Scanning critical assets',
+                '📋 CVE database: UP-TO-DATE',
+                '⚡ High-priority patches: 12',
+                '🛠️  Remediation plan generated'
             ],
-            finalOutput: '+ Server: nginx/1.18.0 - scan complete'
+            finalOutput: 'Security baseline: MAINTAINED'
         }
     ];
     
